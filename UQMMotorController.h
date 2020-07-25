@@ -1,0 +1,73 @@
+/*
+ * UQMMotorController.h
+ *
+ * Note that the dmoc needs to have some form of input for gear selector (drive/neutral/reverse)
+ *
+ Copyright (c) 2014 Jack Rickard
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be included
+ in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ */
+
+#ifndef UQM_H_
+#define UQM_H_
+
+#include <Arduino.h>
+#include "config.h"
+#include "MotorController.h"
+#include "sys_io.h"
+#include "TickHandler.h"
+#include "CanHandler.h"
+
+/*
+ * Class for UQM Powerphase 100/135 specific configuration parameters
+ */
+class UQMMotorControllerConfiguration : public MotorControllerConfiguration
+{
+public:
+};
+
+class UQMMotorController : public MotorController, CanObserver
+{
+
+public:
+  virtual void handleTick();
+  virtual void handleCanFrame(CAN_FRAME *frame);
+  virtual void setup();
+
+  UQMMotorController();
+  void timestamp();
+  DeviceId getId();
+  uint32_t getTickInterval();
+
+  virtual void loadConfiguration();
+  virtual void saveConfiguration();
+
+private:
+  byte online; //counter for whether DMOC appears to be operating
+  byte alive;
+  int activityCount;
+  byte sequence;
+  uint16_t torqueCommand;
+  void sendCmd1();
+  void sendCmd2();
+};
+
+#endif /* UQM_H_ */

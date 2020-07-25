@@ -51,24 +51,24 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "ichip_2128.h"
 #include "Sys_Messages.h"
 #include "CodaMotorController.h"
+#include "UQMMotorController.h"
 #include "FaultHandler.h"
 #include "DCDCController.h"
 #include "EVIC.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
-void loop();
-void setup();
+  void loop();
+  void setup();
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#define SYSTEM_PROTO	1
-#define SYSTEM_DUED		2
-#define SYSTEM_GEVCU3	3
+#define SYSTEM_PROTO 1
+#define SYSTEM_DUED 2
+#define SYSTEM_GEVCU3 3
 
 #endif /* GEVCU_H_ */
-
-
